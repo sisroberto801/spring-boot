@@ -39,12 +39,12 @@ public class RegistryCarSoldService {
 
     @Transactional
     public void update(Long id,RegistryCarSoldController.RegistryCarSoldRequestDTO registryCarSoldRequestDTO){
-        RegistryCarSold r = registryCarSoldRepository.findOne(id);
-        Long afterId = r.getSeller().getId();
+		RegistryCarSold r = registryCarSoldRepository.findOne(id);
+        Long oldId = r.getSeller().getId();
         registryCarSoldRepository.save(changeDTOToObject(registryCarSoldRepository.findOne(id),registryCarSoldRequestDTO));
-        Long beforeId = registryCarSoldRequestDTO.getSellerId();
-        updateSellerAfterEvents(afterId);
-        updateSellerAfterEvents(beforeId);
+        Long newId = registryCarSoldRequestDTO.getSellerId();
+        updateSellerAfterEvents(oldId);
+        updateSellerAfterEvents(newId);
     }
 
     @Transactional
